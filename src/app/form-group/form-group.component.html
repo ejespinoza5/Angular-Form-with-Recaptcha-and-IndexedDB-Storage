@@ -1,0 +1,57 @@
+
+<div class="container">
+  <div class="form-container">
+    <form [formGroup]="form" (ngSubmit)="save($event)">
+      <p>
+        Name:<br>
+        <input type="text" formControlName="name">
+      </p>
+      <p>
+        Fecha:<br>
+        <input type="date" formControlName="date">
+      </p>
+      <div *ngIf="form.get('date')?.errors && form.get('date')?.touched">
+        <small *ngIf="form.get('date')?.hasError('required')">Es un campo requerido</small>
+      </div>
+
+      <p>
+        Email:<br>
+        <input type="email" formControlName="email">
+      </p>
+      <p>
+        Texto largo:<br>
+        <textarea cols="30" rows="10" formControlName="text"></textarea>
+        <small>{{ this.form.get('text')?.value.length }}/200</small>
+      </p>
+      <div *ngIf="textField?.errors && form.get('text')?.touched" class="errores">
+        <small *ngIf="textField?.hasError('maxlength')">Máximo 200 caracteres</small>
+        <small *ngIf="textField?.hasError('required')">Es un campo requerido</small>
+      </div>
+      <p>
+        Categoria:<br>
+        <select formControlName="category">
+          <option value="1">Categoria 1</option>
+          <option value="2">Categoria 2</option>
+          <option value="3">Categoria 3</option>
+        </select>
+      </p>
+      <p>
+        Genero:<br>
+        <input type="radio" value="male" name="gender" formControlName="gender">Hombre
+        <br>
+        <input type="radio" value="female" name="gender" formControlName="gender">Mujer
+        <br>
+        <input type="radio" value="other" name="gender" formControlName="gender">Otro
+      </p>
+      <!-- <button type="submit" [disabled]="form.invalid">Guardar</button> -->
+
+      <div class="captcha-container">
+        <re-captcha siteKey="6Lc7y_YpAAAAALTVwUlULqhO_pDI1w_jFE02vQ75"
+                    (resolved)="handleCaptchaResponse($event)"></re-captcha>
+      </div>
+
+      <button type="submit">Guardar</button>
+
+    </form>
+  </div>
+</div>
